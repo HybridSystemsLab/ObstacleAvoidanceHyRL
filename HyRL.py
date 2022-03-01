@@ -65,8 +65,8 @@ if __name__ == '__main__':
     
     # simulation the hybrid agent compared to the original agent    
     starting_conditions = [np.array([0., 0.0], dtype=np.float32),
-                           np.array([0., 0.06], dtype=np.float32),
-                           np.array([0., -.06], dtype=np.float32),
+                           np.array([0., 0.055], dtype=np.float32),
+                           np.array([0., -.055], dtype=np.float32),
                            np.array([0., 0.15], dtype=np.float32),
                            np.array([0., -.15], dtype=np.float32),]
     for q in range(2):
