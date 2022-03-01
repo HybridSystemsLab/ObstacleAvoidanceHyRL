@@ -24,7 +24,7 @@ def plot_policy(model, resolution=150, figure_number=1):
     for idy in range(resolution):
         for idx in range(resolution):
             obs = compute_observation(x_[idx], y_[idy])
-            action, _ = model.predict(obs)
+            action, _ = model.predict(obs, deterministic=True)
             actions[idy, idx] = (action-2)/2
     x, y = np.meshgrid(x_, y_)
     plt.scatter(x, y, s=15, c=actions)

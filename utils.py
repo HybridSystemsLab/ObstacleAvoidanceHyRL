@@ -67,7 +67,7 @@ def find_critical_points(initial_points, state_difference, model, Env,
                         obs = custom_state_to_observation(np.copy(start))
                     done = False
                     while done == False:
-                        action, _ = model.predict(obs)
+                        action, _ = model.predict(obs, deterministic=True)
                         obs, _, done, _ = env.step(action)
                     steps_left = env.steps_left
                     if get_state_from_env is None:
@@ -137,7 +137,7 @@ def find_X_i(M_i, model, horizon=0.3, n_sims=100, t_sampling=0.05):
                 if M_i.in_M(point) == False:
                     X_i.append(point)
                 else:
-                    action, _ = model.predict(obs)
+                    action, _ = model.predict(obs, deterministic=True)
                 obs, _, done, _ = env_bw.step(action)
                 
         distance = []
@@ -309,7 +309,8 @@ class HyRL_agent():
                 switch = 1
                 self.q = 0
                 active_agent = self.agent_0
-        action, _ = active_agent.predict(state_to_observation_OA(state))
+        action, _ = active_agent.predict(state_to_observation_OA(state),
+                                         deterministic=True)
         return action, switch
 
 def simulate_obstacleavoidance(hybrid_agent, original_agent, state_init, 
@@ -330,7 +331,8 @@ def simulate_obstacleavoidance(hybrid_agent, original_agent, state_init,
         disturbance = np.array([0, noise], dtype=np.float32)
 
         action_or, _ = original_agent.predict(
-                            state_to_observation_OA(state_or+disturbance))
+                            state_to_observation_OA(state_or+disturbance),
+                            deterministic=True)
         action_hyb, switch = hybrid_agent.predict(state_hyb+disturbance)
         
         env_or.state = state_or
